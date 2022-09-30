@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  literature-backend:
+    container_name: literature-backend
+    image: ivankalan12/literature-backend
+    restart: unless-stopped
+    ports: 
+      - 5000:5000
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://postgres:halodunia@103.139.192.240:5432/literature
+    command: >
+      sh -c "npx sequelize-cli db:migrate --env production && node server.js" 
+    
+
