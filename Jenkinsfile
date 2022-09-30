@@ -1,8 +1,8 @@
 def branch = "production"
 def remoteurl = "https://github.com/ivankalan/literature-backend.git"
-def remotename = "jenkins"
+def remotename = "origin"
 def workdir = "~/literature-backend/"
-def ip = "103.139.192.240"
+def ip = "ivanka@103.139.192.240"
 def username = "ivanka"
 def imagename = "ivankalan12/literature-backend"
 def sshkeyid = "app-key"
@@ -14,14 +14,13 @@ pipeline {
     stages {
         stage('Pulling from Backend Repo') {
             steps {
-                sshagent(credentials: ["${sshkeyid}"]) {
-                    sh """
-                        ssh -l ${username} ${ip} <<pwd
-                        cd ${workdir}
-                        git remote add ${remotename} ${remoteurl} || git remote set-url ${remotename} ${remoteurl}
-                        git pull ${remotename} ${branch}
-                        pwd
-                    """
+                sshagent([sshkeyid]) {
+                    sh """ssh -o StrictHostKeyChecking=no ${ip} << EOF 
+                    sh """ssh -l ${username} ${ip} <<pwd
+                    cd ${workdir}
+                    git remote add ${remotename} ${remoteurl} || git remote set-url ${remotename} ${remoteurl}
+                    git pull ${remotename} ${branch}
+                    EOF"""
                 }
             }
         }
