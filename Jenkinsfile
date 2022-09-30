@@ -16,7 +16,6 @@ pipeline {
             steps {
                 sshagent([sshkeyid]) {
                     sh """ssh -o StrictHostKeyChecking=no ${ip} << EOF 
-                    sh """ssh -l ${username} ${ip} <<pwd
                     cd ${workdir}
                     git remote add ${remotename} ${remoteurl} || git remote set-url ${remotename} ${remoteurl}
                     git pull ${remotename} ${branch}
